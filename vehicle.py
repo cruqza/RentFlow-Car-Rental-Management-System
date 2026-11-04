@@ -19,7 +19,7 @@ class Vehicle(ABC):
     model : str
     year : int
     daily_rate : float
-    _available : bool = True
+    _available : bool = field(default=True, init=False)
 
     def __post_init__(self):
         if self.daily_rate < 0:

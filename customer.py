@@ -23,3 +23,5 @@ class Customer:
 
     def view_rental_history(self):
         return self.rentals
+
+
