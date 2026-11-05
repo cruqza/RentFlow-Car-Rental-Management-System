@@ -72,19 +72,15 @@ class MpesaPayment(Payment):
 
 @dataclass
 class CardPayment(Payment):
-    card_number: str = [":4"]
-
-    def _gen_code(self) -> str:
-        digits = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
-        return f"AUTH-{digits}"
+    last_four: str = "" 
 
     def process_payment(self) -> bool:
-        if len(self.card_number) != 16 or not self.card_number.isdigit():
-            print("Invalid card number.")
+        if len(self.last_four) != 4 or not self.last_four.isdigit():
+            print("Invalid card details.")
             self.status = PaymentStatus.FAILED
             return False
-        print(f"Card ending {self.card_number[-4:]} charged Ksh {self.amount}.")
         self._settle()
+        print(f"Card ending {self.last_four} charged KSh {self.amount:,.0f}")
         return True
 
 
@@ -93,14 +89,15 @@ class CashPayment(Payment):
     cash_received: float = 0.0
 
     def process_payment(self) -> bool:
+        if self.is_completed():
+            return self._fail("This payment has already been completed.")
         if self.cash_received < self.amount:
-            print(f"Insufficient: need {self.amount}, received {self.cash_received}.")
-            self.status = PaymentStatus.FAILED
-            return False
+            return self._fail (f"Insufficient: need {self.amount:,.0f}, received {self.cash_received}.")          
+        self._settle()
         change = self.cash_received - self.amount
         if change > 0:
-            print(f"Give change: {change}.")
-        self._settle()
+            print(f"Give change: Ksh {change:,.0f}.")
         return True
+
 
 
