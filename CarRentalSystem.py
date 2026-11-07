@@ -1,4 +1,4 @@
-from vehicle import Vehicle
+from vehicle import Vehicle, Suv, Luxury, EconomyCar
 from customer import Customer
 from rental import Rental, RentalStatus
 from payment import Payment
@@ -29,13 +29,13 @@ class CarRentalSystem:
         for vehicle in self.vehicles:
             if vehicle.registration_number == registration_number:
                 return vehicle
-        return "Vehicle not found"
+        return None
 
     def find_customer(self, customer_id):
         for customer in self.customers:
             if customer.customer_id == customer_id:
                 return customer
-        return "Customer not found."
+        return None
 
     # ---------- Searching ----------
     def show_available_vehicles(self) -> None:
@@ -134,3 +134,23 @@ class CarRentalSystem:
               f"({active} active, {completed} completed)")
         print(f"Payments          : {paid} successful, {failed} failed")
         print(f"Total revenue     : KSh {self.revenue:,.0f}")
+
+
+
+
+# system = CarRentalSystem()
+
+# vcl = Suv("KDK 123A", "Toyota", "Prado", 2022, 8000)
+# system.add_vehicle(vcl)
+# vcg = Suv("KDK 123S", "Toyota", "Prado", 2021, 8000)
+# system.add_vehicle(vcg)
+# # print(system.vehicles) 
+# # print(system.generate_report())
+
+# cust = Customer("Cst001", "Nicholus", '0794229100', 34186842, 'Hope890172')
+# system.register_customer(cust)
+
+# custo = Customer("Cst002", "Nick", '0794229100', 34186842, 'Hope890172')
+# system.register_customer(custo)
+
+# print(system.generate_report())

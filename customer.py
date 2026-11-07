@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 
 
 
+
 @dataclass
 class Customer:
     customer_id : str

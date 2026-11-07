@@ -80,7 +80,7 @@ class CardPayment(Payment):
             self.status = PaymentStatus.FAILED
             return False
         self._settle()
-        print(f"Card ending {self.last_four} charged KSh {self.amount:,.0f}")
+        print(f"Card ending ***{self.last_four} charged KSh {self.amount:,.0f}")
         return True
 
 
